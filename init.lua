@@ -1,0 +1,22 @@
+-- Basic editing settings
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.termguicolors = true
+
+-- Install and load plugins
+vim.pack.add({
+  -- Colorschme
+  { src = "https://github.com/rebelot/kanagawa.nvim" },
+  -- LSP config defaults
+  { src = "https://github.com/neovim/nvim-lspconfig" },
+})
+
+-- Colorscheme
+vim.cmd.colorscheme("kanagawa")
+
+-- Python language server
+vim.lsp.enable("ty")
