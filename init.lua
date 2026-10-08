@@ -18,5 +18,13 @@ vim.pack.add({
 -- Colorscheme
 vim.cmd.colorscheme("kanagawa")
 
+-- Set space as the custom <leader> key
+vim.g.mapleader = " "
+
+-- <leader> - f[ormat] - r[uff]
+vim.keymap.set("n", "<leader>fr", function()
+  vim.lsp.buf.format({ name = "ruff", async = true })
+end, { desc = "Format with Ruff" })
+
 -- Python language server
-vim.lsp.enable("ty")
+vim.lsp.enable({"ty", "ruff"})
