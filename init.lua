@@ -11,7 +11,7 @@ vim.pack.add({
   -- Colorschme
   { src = "https://github.com/rebelot/kanagawa.nvim" },
   -- LSP config defaults
-  { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/neovim/nvim-lspconfig" }
 })
 
 -- Colorscheme
@@ -20,17 +20,19 @@ vim.cmd.colorscheme("kanagawa")
 -- Set space as the custom <leader> key
 vim.g.mapleader = " "
 
--- <leader> - f[ormat] - r[uff]
-vim.keymap.set("n", "<leader>fr", function()
-  vim.lsp.buf.format({ name = "ruff", async = true })
-end, { desc = "Format with Ruff" })
+local formatters = { python = "ruff", lua = "emmylua_ls" }
 
--- Python language server
-vim.lsp.enable({"ty", "ruff"})
+-- <leader> - f: format the current buffer
+vim.keymap.set("n", "<leader>f", function ()
+  local formatter = formatters[vim.bo.filetype]
 
--- <leader> - f[ormat] - l[ua]
-vim.keymap.set("n", "<leader>fl", function()
-  vim.lsp.buf.format({ name = "emmylua_ls", async = true })
-end, { desc = "Format Lua with EmmyLua" })
+  if not formatter then
+    vim.notify("No formatter configured for " .. vim.bo.filetype)
+    return
+  end
 
-vim.lsp.enable("emmylua_ls")
+  vim.lsp.buf.format({ name = formatter, async = true })
+end, { desc = "Format buffer" }
+)
+
+vim.lsp.enable({ "ty", "ruff", "emmylua_ls" })
