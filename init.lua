@@ -1,4 +1,3 @@
--- Basic editing settings
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.expandtab = true
@@ -28,3 +27,10 @@ end, { desc = "Format with Ruff" })
 
 -- Python language server
 vim.lsp.enable({"ty", "ruff"})
+
+-- <leader> - f[ormat] - l[ua]
+vim.keymap.set("n", "<leader>fl", function()
+  vim.lsp.buf.format({ name = "emmylua_ls", async = true })
+end, { desc = "Format Lua with EmmyLua" })
+
+vim.lsp.enable("emmylua_ls")
